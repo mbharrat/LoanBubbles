@@ -1,28 +1,51 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import * as d3 from 'd3'
+import './App.css'
+import BubbleChart from './components/BubbleChart'
+import Bubbles from './components/Bubbles'
+import YearsTitles from './components/YearsTitles'
+import GroupingPicker from './components/GroupingPicker'
+import { createNodes } from './utils'
+import { width, height, center, yearCenters } from './constants'
 
-class App extends Component {
+export default class App extends React.Component {
+  state = {
+    data: [],
+    grouping: 'all',
+  }
+
+  componentDidMount() {
+    d3.csv('data/gates_money.csv', (err, data) => {
+      if (err!== null) {
+        console.log("couldnt load")
+        return
+      }
+      this.setState({
+        data: createNodes(data),
+      })
+    })
+  }
+
+  onGroupingChanged = (newGrouping) => {
+    this.setState({
+      grouping: newGrouping,
+    })
+  }
+
   render() {
+    const { data, grouping } = this.state
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <GroupingPicker onChanged={this.onGroupingChanged} active={grouping} />
+        <BubbleChart width={width} height={height}>
+        <Bubbles data={data} forceStrength={0.03} center={center} yearCenters={yearCenters} groupByYear={grouping === 'year'} />
+          {
+            grouping === 'year' &&
+            <YearsTitles width={width} yearCenters={yearCenters} />
+          }
+        </BubbleChart>
       </div>
-    );
+    )
   }
-}
 
-export default App;
+}
