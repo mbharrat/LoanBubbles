@@ -25,9 +25,11 @@ export default class Bubbles extends React.Component {
     if (nextProps.data !== this.props.data) {
       this.renderBubbles(nextProps.data)
     }
-    if (nextProps.groupByYear !== this.props.groupByYear) {
-      this.regroupBubbles(nextProps.groupByYear)
+    if (nextProps.groupByType !== this.props.groupByType) {
+      this.regroupBubbles(nextProps.groupByType)
     }
+    
+   
   }
 
   shouldComponentUpdate() {
@@ -50,12 +52,23 @@ export default class Bubbles extends React.Component {
     return -this.props.forceStrength * (d.radius ** 2.0)
   }
 
-  regroupBubbles = (groupByYear) => {
-    const { forceStrength, yearCenters, center } = this.props
-    if (groupByYear) {
-      this.simulation.force('x', d3.forceX().strength(forceStrength).x(d => yearCenters[d.year].x))
-                      .force('y', d3.forceY().strength(forceStrength).y(d => yearCenters[d.year].y))
-    } else {
+  regroupBubbles = (groupByType) => {
+    const { forceStrength, typeCenters, center } = this.props
+    if (groupByType) {
+      this.simulation.force('x', d3.forceX().strength(forceStrength).x(d => typeCenters[d.name].x))
+                      .force('y', d3.forceY().strength(forceStrength).y(d => typeCenters[d.name].y))
+    }else {
+      this.simulation.force('x', d3.forceX().strength(forceStrength).x(center.x))
+                      .force('y', d3.forceY().strength(forceStrength).y(center.y))
+    }
+    this.simulation.alpha(1).restart()
+  }
+
+  regroupBubblesType = (groupByType) => {
+    const { forceStrength, typeCenters, center } = this.props
+    if (groupByType) {
+      console.log("hit");
+    }else {
       this.simulation.force('x', d3.forceX().strength(forceStrength).x(center.x))
                       .force('y', d3.forceY().strength(forceStrength).y(center.y))
     }
@@ -74,8 +87,8 @@ export default class Bubbles extends React.Component {
       .attr('r', 0)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('fill', d => fillColor(d.group))
-      .attr('stroke', d => d3.rgb(fillColor(d.group)).darker())
+      .attr('fill', d => fillColor(d.name))
+      .attr('stroke', d => d3.rgb(fillColor(d.name)).darker())
       .attr('stroke-width', 2)
       .on('mouseover', showDetail)  // eslint-disable-line
       .on('mouseout', hideDetail) // eslint-disable-line
@@ -100,8 +113,8 @@ Bubbles.propTypes = {
     y: PropTypes.number.isRequired,
   }),
   forceStrength: PropTypes.number.isRequired,
-  groupByYear: PropTypes.bool.isRequired,
-  yearCenters: PropTypes.objectOf(PropTypes.shape({
+  groupByType: PropTypes.bool.isRequired,
+  typeCenters: PropTypes.objectOf(PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
   }).isRequired).isRequired,
@@ -141,7 +154,7 @@ export function showDetail(d) {
 export function hideDetail(d) {
     // reset outline
   d3.select(this)
-      .attr('stroke', d3.rgb(fillColor(d.group)).darker())
+      .attr('stroke', d3.rgb(fillColor(d.name)).darker())
 
   tooltip.hideTooltip()
 }

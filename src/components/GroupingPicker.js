@@ -10,8 +10,8 @@ export default class GroupingPicker extends React.Component {
     const { active } = this.props
     return (
       <div className="GroupingPicker">
-        <button className={`button ${active === 'all' && 'active'}`} name="all" onClick={this.onBtnClick}>All Loans</button>
-        <button className={`button ${active === 'year' && 'active'}`} name="year" onClick={this.onBtnClick}>Loans By Year</button>
+        <button className={`button ${active === 'all' && 'active'}`} name="all" onClick={this.onBtnClick}>All NY Loans</button>
+        <button className={`button ${active === 'type' && 'active'}`} name="type" onClick={this.onBtnClick}>NY Loans By Type</button>
       </div>
     )
   }
@@ -19,5 +19,5 @@ export default class GroupingPicker extends React.Component {
 
 GroupingPicker.propTypes = {
   onChanged: PropTypes.func.isRequired,
-  active: PropTypes.oneOf(['all', 'year']).isRequired,
+  active: PropTypes.oneOf(['all', 'type']).isRequired,
 }

@@ -3,10 +3,10 @@ import * as d3 from 'd3'
 import './App.css'
 import BubbleChart from './components/BubbleChart'
 import Bubbles from './components/Bubbles'
-import YearsTitles from './components/YearsTitles'
+import TypeTitles from './components/TypeTitles'
 import GroupingPicker from './components/GroupingPicker'
 import { createNodes } from './utils'
-import { width, height, center, yearCenters } from './constants'
+import { width, height, center, typeCenters } from './constants'
 
 export default class App extends React.Component {
   state = {
@@ -15,11 +15,14 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    d3.csv('data/gates_money.csv', (err, data) => {
+    
+    
+      d3.csv('data/NY.csv', (err, data)=>{
       if (err!== null) {
-        console.log("couldnt load")
+        alert("Could not load NY Data");
         return
       }
+      console.log(data);
       this.setState({
         data: createNodes(data),
       })
@@ -38,10 +41,10 @@ export default class App extends React.Component {
       <div className="App">
         <GroupingPicker onChanged={this.onGroupingChanged} active={grouping} />
         <BubbleChart width={width} height={height}>
-        <Bubbles data={data} forceStrength={0.03} center={center} yearCenters={yearCenters} groupByYear={grouping === 'year'} />
+        <Bubbles data={data} forceStrength={0.03} center={center} typeCenters={typeCenters} groupByType={grouping === 'type'} />
           {
-            grouping === 'year' &&
-            <YearsTitles width={width} yearCenters={yearCenters} />
+            grouping === 'type' &&
+            <TypeTitles width={width} typeCenters={typeCenters}/>
           }
         </BubbleChart>
       </div>

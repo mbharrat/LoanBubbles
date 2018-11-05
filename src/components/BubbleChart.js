@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './BubbleChart.css'
 
 export default function BubbleChart({ width, height, children }) {
   return (
-    <svg className="bubbleChart" width={width} height={height}>
+    <svg className="bubbleChart" height={height}>
       {
         children
       }
