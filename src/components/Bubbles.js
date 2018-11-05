@@ -33,8 +33,7 @@ export default class Bubbles extends React.Component {
   }
 
   shouldComponentUpdate() {
-    // we will handle moving the nodes on our own with d3.js
-    // make React ignore this component
+    //make react ignore
     return false
   }
 
@@ -90,8 +89,8 @@ export default class Bubbles extends React.Component {
       .attr('fill', d => fillColor(d.name))
       .attr('stroke', d => d3.rgb(fillColor(d.name)).darker())
       .attr('stroke-width', 2)
-      .on('mouseover', showDetail)  // eslint-disable-line
-      .on('mouseout', hideDetail) // eslint-disable-line
+      .on('mouseover', showDetail)  
+      .on('mouseout', hideDetail) 
 
     bubblesE.transition().duration(2000).attr('r', d => d.radius).on('end', () => {
       this.simulation.nodes(data)
@@ -127,10 +126,6 @@ Bubbles.propTypes = {
   })),
 }
 
-/*
-* Function called on mouseover to display the
-* details of a bubble in the tooltip.
-*/
 export function showDetail(d) {
     // change outline to indicate hover state.
   d3.select(this).attr('stroke', 'black')
@@ -152,11 +147,8 @@ export function showDetail(d) {
   tooltip.showTooltip(content, d3.event)
 }
 
-/*
-* Hides tooltip
-*/
+//hide tooltip
 export function hideDetail(d) {
-    // reset outline
   d3.select(this)
       .attr('stroke', d3.rgb(fillColor(d.name)).darker())
 

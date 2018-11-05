@@ -59,7 +59,9 @@ export default class App extends React.Component {
         <GitButton/>
         </div>
         <GroupingPicker onChanged={this.onGroupingChanged} active={grouping} />
+        <h2 className="Error">Please look at this page on a computer</h2>
         <BubbleChart width={width} height={height}>
+
         <Bubbles data={data} forceStrength={0.03} center={center} typeCenters={typeCenters} groupByType={grouping === 'type'} />
           {
             grouping === 'type' &&

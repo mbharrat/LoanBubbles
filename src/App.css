@@ -1,6 +1,11 @@
+
 .App {
   text-align: center;
   width: 100%;
+}
+
+.Error {
+  display: none;
 }
 
 .App-logo {
@@ -29,6 +34,14 @@
     padding: 10px;
 }
 
+/*
+  .Bubble {
+    display: none;
+  }
+  */
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,4 +49,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@media (max-width: 849px){
+   .Error {
+    display: inline;
+    }
+    .bubbleChart {
+      display: none;
+    }
+  
 }
