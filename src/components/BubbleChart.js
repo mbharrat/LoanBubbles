@@ -4,7 +4,7 @@ import './BubbleChart.css'
 
 export default function BubbleChart({ width, height, children }) {
   return (
-    <svg className="bubbleChart" height={height}>
+    <svg className="bubbleChart" width={width} height={height}>
       {
         children
       }

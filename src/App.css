@@ -23,6 +23,12 @@
   color: #61dafb;
 }
 
+.Git {
+  display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -7,6 +7,8 @@ import TypeTitles from './components/TypeTitles'
 import GroupingPicker from './components/GroupingPicker'
 import { createNodes } from './utils'
 import { width, height, center, typeCenters } from './constants'
+import GitButton from './components/GitButton';
+
 
 export default class App extends React.Component {
   state = {
@@ -27,6 +29,19 @@ export default class App extends React.Component {
         data: createNodes(data),
       })
     })
+
+
+      const script = document.createElement("script");
+      script.src = "https://buttons.github.io/buttons.js";
+      script.async=true;
+      script.defer=true;
+
+      document.head.appendChild(script);
+
+
+
+
+      
   }
 
   onGroupingChanged = (newGrouping) => {
@@ -39,12 +54,18 @@ export default class App extends React.Component {
     const { data, grouping } = this.state
     return (
       <div className="App">
+        <br/>
+        <div className="Git">
+        <GitButton/>
+        </div>
         <GroupingPicker onChanged={this.onGroupingChanged} active={grouping} />
         <BubbleChart width={width} height={height}>
         <Bubbles data={data} forceStrength={0.03} center={center} typeCenters={typeCenters} groupByType={grouping === 'type'} />
           {
             grouping === 'type' &&
-            <TypeTitles width={width} typeCenters={typeCenters}/>
+            <g>
+            <TypeTitles height={height} width={width}/>
+            </g>
           }
         </BubbleChart>
       </div>

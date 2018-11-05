@@ -135,15 +135,19 @@ export function showDetail(d) {
     // change outline to indicate hover state.
   d3.select(this).attr('stroke', 'black')
 
-  const content = `<span class="name">Title: </span><span class="value">${
+  const content = `<span class="name">Description: </span><span class="value">${
                   d.name
                   }</span><br/>` +
-                  `<span class="name">Amount: </span><span class="value">$${
+                  `<span class="name">Loan Amount: </span><span class="value">$${
                   d.value
+                  }</span><br/>` +
+                  `<span class="name">Interest Rate: </span><span class="value">${
+                  d.interest
                   }</span><br/>` +
                   `<span class="name">Year: </span><span class="value">${
                   d.year
                   }</span>`
+
 
   tooltip.showTooltip(content, d3.event)
 }
